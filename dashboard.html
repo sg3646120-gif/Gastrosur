@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>GastroSur - Panel Principal</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+
+<div class="d-flex">
+
+    <!-- MENÚ LATERAL -->
+    <div class="sidebar p-4">
+
+        <div class="text-center mb-4">
+            <h4 class="text-white fw-bold">GastroSur</h4>
+            <small class="text-light">Resultados Endoscópicos</small>
+        </div>
+
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a class="nav-link text-white" href="#">Inicio</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="nav-link text-white" href="#">Buscar Resultados</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="nav-link text-white" href="#">Pacientes Pendientes</a>
+            </li>
+        </ul>
+
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="contenido w-100">
+
+        <!-- BARRA SUPERIOR -->
+        <nav class="navbar navbar-light bg-white shadow-sm px-4">
+            <span class="fw-bold text-primary">Panel de Control</span>
+
+            <a href="inicio.html" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Desea cerrar sesión?')">
+    Cerrar Sesión
+</a>
+        </nav>
+
+        <div class="p-4">
+
+            <!-- BUSCADOR -->
+            <div class="card shadow p-4 mb-4">
+                <h5 class="text-primary mb-3">Buscar Resultado Endoscópico</h5>
+
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <input type="text" class="form-control" placeholder="Número de Cédula">
+                    </div>
+
+                    <div class="col-md-5 mb-3">
+                        <input type="text" class="form-control" placeholder="Nombre del Paciente">
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <button class="btn btn-primary w-100">Buscar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLA RESULTADOS -->
+            <div class="card shadow p-4 mb-4">
+                <h5 class="text-primary mb-3">Resultados Registrados</h5>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Cédula</th>
+                                <th>Paciente</th>
+                                <th>Tipo Estudio</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>12345678</td>
+                                <td>Juan Pérez</td>
+                                <td>Endoscopia Digestiva Alta</td>
+                                <td>10/02/2026</td>
+                                <td><span class="badge bg-success">Disponible</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>87654321</td>
+                                <td>María Gómez</td>
+                                <td>Colonoscopia</td>
+                                <td>12/02/2026</td>
+                                <td><span class="badge bg-warning text-dark">En Revisión</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PACIENTES PENDIENTES -->
+            <div class="card shadow p-4">
+                <h5 class="text-danger mb-3">Pacientes Pendientes en Sala</h5>
+
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between">
+                        Carlos Ramírez
+                        <span class="badge bg-danger">Sala 1</span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        Ana Martínez
+                        <span class="badge bg-danger">Sala 2</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
