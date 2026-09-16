@@ -44,15 +44,75 @@
 </div>
 
 <script>
-    document.getElementById('formRegistro').addEventListener('submit', function(event) {
-        event.preventDefault(); // Evita que la página intente buscar un servidor ausente.
+// Credenciales de Supabase
+const SUPABASE_URL = "https://oduitmaxnoblxavmeeap.supabase.co";
+const SUPABASE_KEY = "sb_publishable_LSOqYixK8gPTK4yAEKSuBw_mQpD_lli";
 
-        // Simula la persistencia local de la información de manera exitosa
-        alert('Usuario registrado exitosamente en el sistema GastroSur.');
+// Escuchamos el evento de envío del formulario
+document.addEventListener('DOMContentLoaded', function() {
+    const formulario = document.querySelector('form') || document.getElementById('formRegistro');
+    if (formulario) {
+        formulario.addEventListener('submit', procesarRegistro);
+    }
+});
 
-        // Redirección limpia al Login tras aceptar la alerta
-        window.location.href = "inicio.html";
-    });
+async function procesarRegistro(event) {
+    event.preventDefault();
+
+    // Capturamos los campos de entrada
+    const inputs = document.querySelectorAll('input');
+    
+    let nombres = inputs[0] ? inputs[0].value.trim() : "";
+    let apellidos = inputs[1] ? inputs[1].value.trim() : "";
+    let cedula = inputs[2] ? inputs[2].value.trim() : "";
+
+    let contenedorMensaje = document.getElementById("contenedorError") || document.getElementById("contenedorMensaje");
+
+    if (!contenedorMensaje) {
+        contenedorMensaje = document.createElement('div');
+        contenedorMensaje.id = 'contenedorMensaje';
+        document.querySelector('.card').appendChild(contenedorMensaje);
+    }
+
+    contenedorMensaje.innerHTML = "";
+
+    if (nombres === "" || cedula === "") {
+        mostrarMensaje(contenedorMensaje, "Debe ingresar al menos Nombres y Cédula", "danger");
+        return;
+    }
+
+    try {
+        // Petición POST a la API REST de Supabase en la tabla pacientes
+        const respuesta = await fetch(`${SUPABASE_URL}/rest/v1/pacientes`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({
+                nombre: `${nombres} ${apellidos}`.trim(),
+                documento: cedula,
+                email: ""
+            })
+        });
+
+        if (respuesta.ok) {
+            mostrarMensaje(contenedorMensaje, "¡Usuario registrado con éxito!", "success");
+            document.querySelectorAll('input').forEach(input => input.value = '');
+        } else {
+            const err = await respuesta.json();
+            mostrarMensaje(contenedorMensaje, "Error al registrar: " + (err.message || "No se pudo guardar"), "danger");
+        }
+    } catch (error) {
+        mostrarMensaje(contenedorMensaje, "Error de red/conexión: " + error.message, "danger");
+    }
+}
+
+function mostrarMensaje(contenedor, mensaje, tipo) {
+    contenedor.innerHTML = `<div class="alert alert-${tipo} mt-3 mb-0" role="alert">${mensaje}</div>`;
+}
 </script>
 </body>
 </html>
